@@ -138,21 +138,6 @@ def process_login():
     Find the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session.
     """
-
-    # TODO: Need to implement this!
-
-    # The logic here should be something like:
-    #
-    # - get user-provided name and password from request.form
-    # - use customers.get_by_email() to retrieve corresponding Customer
-    #   object (if any)
-    # - if a Customer with that email was found, check the provided password
-    #   against the stored one
-    # - if they match, store the user's email in the session, flash a success
-    #   message and redirect the user to the "/melons" route
-    # - if they don't, flash a failure message and redirect back to "/login"
-    # - do the same if a Customer with that email doesn't exist
-
     email = request.form["email"]
     password = request.form["password"]
 
@@ -186,6 +171,26 @@ def checkout():
 
     flash("Sorry! Checkout will be implemented in a future version.")
     return redirect("/melons")
+
+@app.route("/signup", methods = ["GET"])
+def get_signup():
+    """Sign up customer, add to customer object."""
+    return render_template("signup.html")
+
+@app.route("/signup", methods = ["POST"])
+def signup():
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    email = request.form["email"]
+    hashed_password = request.form["password"]
+
+    new_customer = customers.Customer(first_name, last_name, email, hashed_password)
+
+    customers.customers[email] = new_customer
+
+    print(customers.customers)
+
+    return redirect ('/melons')
 
 
 if __name__ == "__main__":

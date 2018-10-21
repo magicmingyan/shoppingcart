@@ -14,7 +14,7 @@ class Customer(object):
     def __repr__(self):
         """convenience"""
 
-        return "<Customer: {}, {}, {}, {}>".format(self.first_name, self.last_name, self.email, self.password)
+        return "<Customer: {}, {}, {}, {}>".format(self.first_name, self.last_name, self.email, self.hashed_password)
 
 
 def read_file(filename):
